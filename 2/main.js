@@ -52,5 +52,5 @@ fs.readFile('input.txt', 'utf8', (err, data) => {
     }
 
     console.log('My total score is: ' + myTotalScore);
-    console.log('My alt total score is: ' + correctTotalScore);
+    console.log('My correct total score is: ' + correctTotalScore);
 });
