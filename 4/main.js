@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-fs.readFile('example-input.txt', 'utf8', (err, data) => {
+fs.readFile('input.txt', 'utf8', (err, data) => {
     if (err) {
         console.error(err);
         return;
@@ -27,19 +27,14 @@ async function start(input) {
 
         //wanted to solve with if statements. got lazy and did this instead
         elf1Sections = [];
-        let n = elf1MinMax[0];
-        while (n <= elf1MinMax[1]) {
-            elf1Sections.push(n);
-            n++;
+        for (let i = elf1MinMax[0]; i <= elf1MinMax[1]; i++){
+            elf1Sections.push(i);
         }
-
-        let m = elf2MinMax[0];
-        while (m <= elf2MinMax[1]) {
-            if (elf1Sections.includes(m)) {
+        for (let i = elf2MinMax[0]; i <= elf2MinMax[1]; i++){
+            if (elf1Sections.includes(i)) {
                 overlappingSections++;
                 break;
             }
-            m++;
         }
     }
 
