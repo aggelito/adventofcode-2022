@@ -1,6 +1,4 @@
 const fs = require('fs');
-const { json } = require('stream/consumers');
-const { serialize } = require('v8');
 
 fs.readFile('example-input.txt', 'utf8', (err, data) => {
     if (err) {
@@ -37,7 +35,8 @@ async function start(input) {
                 currentDir.dirs[p3] = {
                     parent: currentDir,
                     files: [],
-                    dirs: []
+                    dirs: [],
+                    name: p3
                 }
             }
             currentDir = currentDir.dirs[p3];
@@ -47,7 +46,8 @@ async function start(input) {
             currentDir.dirs[p2] = {
                 parent: currentDir,
                 files: [],
-                dirs: []
+                dirs: [],
+                name: p2
             }
         }
 
@@ -70,10 +70,10 @@ async function start(input) {
 
     // console.log(dirs.dirs['/'].dirs);
     let p1sum = 0;
-    let dirsUnder = getDirsUnder(dirs.dirs['/'], p1sum);
+    // let dirsUnder = getDirsUnder(dirs.dirs['/'], p1sum);
 
 
-    // console.log(sum);
+    console.log(sum);
     console.log(experimentalSum);
 
 }
@@ -89,7 +89,7 @@ function getDirsUnder(dir, sum) {
     
     for (let key in dir.dirs) {
         // currentDirSize += calculateDirSize(dir.dirs[key]);
-        getDirsUnder(dir.dirs[key]);
+        console.log('getDirsUnder(dir.dirs[key])');
     }
 
     return dir.size;
@@ -121,28 +121,25 @@ function calculateDirSize(dir) {
 
     for (file of dir.files) {
         currentDirSize += file.fileSize;
-
-        // console.log(file.fileName);
-        // console.log(file.fileSize);
     }
 
-    // if (dir.dirs.length === 0) {
-    //     return currentDirSize;
-    // }
-
-
     let subDirsSize = 0;
+    let subdirSizes = [];
+
+    
+
     for (let key in dir.dirs) {
         // currentDirSize += calculateDirSize(dir.dirs[key]);
         let subDirSize = calculateDirSize(dir.dirs[key]);
-
         subDirsSize += subDirSize
+        subdirSizes.push(subDirSize);
 
-        // if(subDirSize <= 100000) {
-        // }
     }
 
     currentDirSize = currentDirSize + subDirsSize;
+
+
+
 
     //save size for later
     dir.size = currentDirSize;
